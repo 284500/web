@@ -1,0 +1,14 @@
+配置
+  name: 
+  git config --global user.name "huguohua"
+  
+  email:
+   git config --global user.email "2845008517@qq.com"
+   
+   
+使用git
+  git status 查看当前仓库状态
+  
+  git init 初始化厂库
+
+   git init （name）指定仓库目录

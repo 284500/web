@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.staticfile.org/vue/3.2.36/vue.global.min.js"></script>
+</head>
+<body>
+    <div id="app">
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                }
+            },
+            methods: {
+                
+            },
+        })
+        const myalert={
+            props:[],
+            methods: {},
+            computed: {},
+            template:``
+        }
+        app.component('my_alert',myalert)
+        app.mount('#app')
+    
+    </script>
+</body>
+</html>
+
+创建项目 vue create [name] 
+安装依赖 npm install
+启动程序 npm run dev
+安装并保存到package.json   npm install --save element-plus
+全部引入 在 main.js 中引入并注册全部组件，即可在其它页面中直接使用全部组件
+import ElementPlus from 'element-plus'
+import 'element-plus/lib/theme-chalk/index.css'
+
+打包文件 npm run build
+
+
+

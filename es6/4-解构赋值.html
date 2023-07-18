@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //1.数组的结构
+    // const NUM=[1,2,3,4];
+    // let [one,two,three,four]=NUM;
+    // console.log(one);
+
+    //2,数据的解构
+    const student={
+        name: 'hu',
+        age: 'null',
+        abrity:function(){
+            console.log("学习");
+        }
+    }
+    // let {name,age,abrity}=student;
+    // abrity();
+    let {abrity}=student;
+    abrity();
+    </script>
+</body>
+</html>

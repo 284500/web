@@ -1,0 +1,9 @@
+v-once  渲染后就无法改变
+v-text  将表达式的值作为元素的textcontent插入，如同{{}}
+v-html  将文本以html代码的形式输出，innerhtml
+v-bind  将标签属性与标签绑定  v-bind可以省略为冒号 :id="id"
+v-model 双向绑定
+v-on    事件绑定 v-on可以省略为@符号   @click="myfunc"
+v-if    条件渲染，设置为true时才会渲染
+v-else  与v-if组成if语句
+v-for   循环渲染,需要设置特殊语法 item in list

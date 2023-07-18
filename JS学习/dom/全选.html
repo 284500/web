@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript">
+			    window.onload=function(){
+				var items=document.getElementsByName("item");
+				var checkAllbtn=document.getElementById("checkAllBtn");
+				var checkNobtn=document.getElementById("checkNoBtn");
+				var checkRevbtn=document.getElementById("checkRevBtn");
+				var sendbtn=document.getElementById("sendBtn");
+				var checkallbox=document.getElementById("checkAllbox");
+				checkAllbtn.onclick=function()
+				{
+				  for(var i=0;i<items.length;i++)
+				     {
+					   items[i].checked=true;
+				     }
+					 checkallbox.checked=true;
+				}
+				checkNobtn.onclick=function()
+				{
+					for(var i=0;i<items.length;i++)
+					   {
+						items[i].checked=false;
+					   }
+					   checkallbox.checked=false;
+				}
+				checkRevbtn.onclick=function(){
+					checkallbox.checked=true;
+					for(var i=0;i<items.length;i++)
+					{
+						items[i].checked=!items[i].checked;
+						if(!items[i].checked)
+						{
+							checkallbox.checked=false;
+						}
+					}
+				}
+				sendbtn.onclick=function(){
+					   {
+						   if(items[i].checked){
+						alert(items[i].value);
+					   }}
+				}
+				checkallbox.onclick=function(){
+					for(var i=0;i<items.length;i++)
+					{
+						if(checkallbox.checked)
+						{items[i].checked=true;}
+						else{items[i].checked=false;}
+					}
+				}
+				//给选框分配事件
+				for(var i=0;i<items.length;i++){
+				    items[i].onclick=function(){
+					checkallbox.checked=true;
+					for(var j=0;j<items.length;j++){
+						if(!items[j].checked)
+						{
+							checkallbox.checked=false;
+							break;
+						}
+					  }		
+					}
+					}
+			}
+		</script>
+	</head>
+	<body>
+		<form method="POST" action="">
+			<p>你的爱好是？</p>
+			<input type="checkbox" id="checkAllbox"/>全选、全不选
+			<br/>
+			<input type="checkbox" name="item" value="足球">足球
+			<input type="checkbox" name="item" value="篮球">篮球
+			<input type="checkbox" name="item" value="羽毛球">羽毛球
+			<input type="checkbox" name="item" value="乒乓球">乒乓球<br/>
+			
+			<input type="button" id="checkAllBtn" value="全选">
+			<input type="button" id="checkNoBtn" value="全不选">
+			<input type="button" id="checkRevBtn" value="反选">
+			<input type="button" id="sendBtn" value="提交">
+		</form>
+	</body>
+</html>

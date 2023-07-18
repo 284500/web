@@ -1,0 +1,24 @@
+一,基础元素
+display	指定 HTML 元素的盒子类型
+flex-direction	指定弹性盒子中子元素的排列方式
+flex-wrap	设置当弹性盒子的子元素超出父容器时是否换行
+flex-flow	flex-direction 和 flex-wrap 两个属性的简写
+justify-content	设置弹性盒子中元素在主轴（横轴）方向上的对齐方式
+align-items	设置弹性盒子中元素在侧轴（纵轴）方向上的对齐方式
+align-content	修改 flex-wrap 属性的行为，类似 align-items，但不是设置子元素对齐，而是设置行对齐
+order	设置弹性盒子中子元素的排列顺序
+align-self	在弹性盒子的子元素上使用，用来覆盖容器的 align-items 属性
+flex	设置弹性盒子中子元素如何分配空间
+flex-grow	设置弹性盒子的扩展比率
+flex-shrink	设置弹性盒子的收缩比率
+flex-basis	设置弹性盒子伸缩基准值
+
+ /* 100%窗口高度 */
+    height: 100vh;
+    /* 弹性布局 水平+垂直居中 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eee;
+    /* 防止选取 */
+    user-select: none; 

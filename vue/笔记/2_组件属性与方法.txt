@@ -1,0 +1,30 @@
+prop是子组件用来接受父组件传递过来的数据的一个自定义属性。
+
+父组件的数据需要通过 props 把数据传给子组件，子组件需要显式地用 props 选项声明 "prop"：
+
+动态prop 类似于用 v-bind 绑定 HTML 特性到一个表达式，也可以用 v-bind 动态绑定 props 的值到父组件的数据中。
+每当父组件的数据变化时，该变化也会传导给子组件
+
+computed 计算属性  不会赋值，只计算数据
+
+set方法，用来存储数据
+
+属性监听器  watch 我们可以通过 watch 来响应数据的变化。
+
+表单的双向绑定 input实现单行文本输入,多行使用textarea
+
+lazy,trim修饰符 lazy不需要处理文本框里元素的变化
+trim去除文本后面的空格
+
+样式绑定
+
+class 属性绑定
+我们可以为 v-bind:class 设置一个对象，从而动态的切换 class:
+<div :class="{blue:isBlue,red:isRed}"> 案例 </div> isBlue,isRed为布尔值
+<div :class="[red,blue]">案例2</div>
+
+style  内联样式绑定
+<div :style="{color:Color,fontSize:Fontsize+'px'}">内敛</div>
+
+组件上使用class 当你在带有单个根元素的自定义组件上使用 class 属性时，
+这些 class 将被添加到该元素中。此元素上的现有 class 将不会被覆盖

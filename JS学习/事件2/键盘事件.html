@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			#box1{
+				width: 100px;
+				height: 100px;
+				background-color: red;
+			}
+		</style>
+		<script>
+			window.onload=function(){
+				//键盘事件
+				//onkeydown,onkeyup
+				//通常绑定焦点对象，表单或document
+					
+				document.onkeydown=function(event){
+				// 	//keycode获取编码
+				// 	//altkey,shiftkey,ctrlkey可以判断是否按下
+					if(event.keyCode ===89 &&event.ctrlKey){
+					console.log("按键被按下");
+				}}
+				// document.onkeyup=function(){
+				// 	console.log("按键松开");
+				// }
+				var input=document.getElementsByTagName("input")[0];
+				input.onkeydown=function(event){
+					console.log(event.keyCode);
+				}
+				}
+		</script>
+	</head>
+	<body>
+		<div id="box1">
+			<input type="text">
+		</div>
+	</body>
+</html>

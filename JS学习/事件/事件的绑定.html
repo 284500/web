@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script>
+			window.onload=function(){
+				var btn01=document.getElementById("btn01");
+				//使用对象.函数的形式绑定响应函数。只能为一个元素的一个事件绑定一个函数
+				// btn01.onclick=function(){
+				// 	alert(i);
+				// }
+				//addEventlistener()
+				//参数,事件的字符串，回调函数,是否在捕获阶段触发函数，一般false
+				// btn01.addEventListener("click",function(){
+				// 	alert(this); //button对象
+				// },false);
+				// btn01.addEventListener("click",function(){
+				// 	alert("2");
+				// },false);
+				//定义一个函数绑定
+				//obj 要绑定事件对象.eventStr 事件字符串 callback回调函数
+				function bind(obj,eventStr,callback){
+					obj.addEventListener(eventStr,callback,false);
+				}
+				bind(btn01,"click",function(){
+					alert(this);
+				});
+				bind(btn01,"click",function(){
+					alert("2");
+				});
+			};
+		</script>
+	</head>
+	<body>
+		<button id="btn01">点击</button>
+	</body>
+</html>

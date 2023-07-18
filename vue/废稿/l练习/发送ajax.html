@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>axios </title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <button>GET</button>
+    <button>POST</button>
+    <button>AJAX</button>
+    <p></p>
+    <script>
+        const btns = document.querySelectorAll('button');
+        const p = document.querySelector('p');
+        let data = {};
+        // let post={
+        //     name:'daa',
+        //     age:26
+        // }
+        //配置baseURL
+        axios.defaults.baseURL = 'http://127.0.0.1:3000';
+
+        btns[0].onclick = function () {
+            //get请求
+            axios.get('/axios', {
+                //发送参数
+                params: {
+                    name: 'mark',
+                    age: 18
+                },
+                //请求头消息
+                headers: {
+                    name: 'adad',
+                    age: 20
+                }
+            }).then(value => console.log(value))
+        }
+        btns[1].onclick = function () {
+            //post请求
+                // axios.post('/axios',JSON.stringify(post)
+                // ).then(value=>console.log(value.data))
+            axios.post('/axios',{
+                name:12,
+                age:'dada'
+            }).then(value=>console.log(value.data))
+        }
+        btns[2].onclick = function () {
+            //通用方法
+            axios({
+                method: 'post',
+                url: '/axios',
+                data:{
+                    username: 'da',
+                    password:123456
+                }
+            }).then(value => {
+                data = value.data
+                p.innerHTML = data.name
+                console.log(data)
+            })
+        }
+    </script>
+</body>
+
+</html>

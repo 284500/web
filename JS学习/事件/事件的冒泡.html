@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			#box1{
+				width: 200px;
+				height: 200px;
+				background-color: red;
+			}
+			#s1{
+				background-color: aquamarine;
+			}
+		</style>
+		<script>
+			window.onload=function(){
+				
+				//点击子元素，父元素也会触发
+				//事件的冒泡（bubble)
+				//通过事件对象取消冒泡
+				var s1=document.getElementById("s1");
+				s1.onclick=function(event){
+					event=event||window.event;
+					alert("s1");
+					//设置为true可以取消冒泡
+					event.cancelBubble=true;
+				}
+				var box1=document.getElementById("box1");
+					
+				box1.onclick=function(){
+					alert("box1");
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="box1">我是box
+			<span id="s1">我是span</span>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box1{
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				position: absolute;
+				[attr]: 0;
+			}
+			#box2{
+				width: 100px;
+				height: 100px;
+				background-color: blue;
+				position: absolute;
+				[attr]: 0;
+				top: 200px;
+			}
+		</style>
+		<script type="text/javascript" src="../js/tools.js"></script>
+		<script type="text/javascript">
+			window.onload=function(){
+				var box1=document.getElementById("box1");
+				var btn1=document.getElementById("btn1");
+				var btn2=document.getElementById("btn2");
+				var timer;
+				var btn3=document.getElementById("btn3");
+				btn1.onclick=function(){move(box1,"left",10,800);};
+				btn2.onclick=function(){move(box1,"left",10,0);};
+				btn3.onclick=function(){move(box2,"width",10,800,function(){
+					move(box2,"height",10,600,function(){});
+				});};
+				
+				
+			}
+		</script>
+	</head>
+	<body>
+		<button id="btn1">点击向右</button>
+		<button id="btn2">点击向左</button>
+		<button id="btn3">box2点击向右</button>
+		<div id="box1"></div>
+		<div id="box2"></div>
+		<div style="width: 0; height: 1000px; border-left: 1px black solid; position: absolute; left: 800px; top: 0;"></div>
+	</body>
+</html>

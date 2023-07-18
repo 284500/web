@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>贪吃蛇1.0</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        #left {
+            width: 1236px;
+            height: 100%;
+            background: gray;
+            float: left;
+        }
+
+        #right {
+            width: 283px;
+            height: 100%;
+            float: left;
+            background-color: gainsboro;
+        }
+
+        #Grid {
+            width: 1100px;
+            height: 700px;
+            margin: 40px auto;
+            background-color: black;
+            position: relative;
+        }
+
+        #score {
+            width: 100%;
+            height: 10%;
+            text-align: center;
+            margin: 20px auto;
+
+        }
+
+        #level {
+            width: 100%;
+            height: 10%;
+            text-align: center;
+            margin: 20px auto;
+        }
+
+        #score label {
+            font-size: 30px;
+            margin: 20px 20px;
+        }
+
+        #level label {
+            font-size: 30px;
+            margin: 20px 20px;
+        }
+
+        #orientation {
+            width: 100%;
+            height: 30%;
+            text-align: center;
+            margin: 20px auto;
+        }
+
+        #orientation button {
+            width: 55px;
+            height: 55px;
+            text-align: center;
+            margin: 20px 12px;
+        }
+
+        #control {
+            width: 100%;
+            height: 30%;
+            text-align: center;
+            margin: 20px auto;
+        }
+
+        #control button {
+            width: 200px;
+            height: 50px;
+            text-align: center;
+            margin: 35px 10px;
+        }
+
+        .GameOverLabel {
+            font-size: 50px;
+            font-weight: bolder;
+            color: red;
+            margin: 320px 460px;
+            position: absolute;
+            z-index: 3;
+        }
+
+        .GameWinLabel {
+            font-size: 50px;
+            font-weight: bolder;
+            color: green;
+            margin: 320px 460px;
+            position: absolute;
+            z-index: 3;
+        }
+
+        .snakeBodyColor {
+            background-color: greenyellow;
+            z-index: 1;
+        }
+
+        .foodColor {
+            background-color: red;
+            border-radius: 10px;
+            z-index: 0;
+        }
+
+        .wallColor {
+            background-color: orange;
+            z-index: 0;
+        }
+
+        .GameOver {
+            opacity: 0.2;
+            background-color: gray;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var Grid = document.getElementById("Grid");
+            //设置单元单位的宽高s
+            var cellWidth = Grid.offsetWidth / 44;
+            //单元格转化后的相对长宽
+            var GridHeight = 28;
+            var GridWidth = 44;
+
+            //获取拟合坐标方法
+            function GetFitCoordinate(position) {
+                var fitX = (position[0] / Math.abs(position[0])) * Math.round(Math.abs(position[0]));
+                var fitY = (position[1] / Math.abs(position[1])) * Math.round(Math.abs(position[1]));
+                return [fitX, fitY];
+            }
+            //Bresenham算法
+            function GetLinePosition(position_1, position_2, cellSize) {
+                //获取dx，dy
+                var dx = (position_2[0] - position_1[0]) * cellWidth;
+                var dy = (position_2[1] - position_1[1]) * cellWidth;
+                //设置像素点集
+                var points = [];
+                //斜率
+                var k = null;
+                //单位增量
+                var cellDx = 0;
+                var cellDy = 0;
+                if (dx != 0) {
+                    var cellDx = (dx / Math.abs(dx)) * cellWidth;
+                }
+                if (dy != 0) {
+                    var cellDy = (dy / Math.abs(dy)) * cellWidth;
+
+                }
+                var val_x = position_1[0] * cellWidth;
+                var val_y = position_1[1] * cellWidth;
+                if (dx != 0) {
+                    //一般情况求得斜率
+                    k = dy / dx;
+                    if (Math.abs(k) <= 1) {
+                        for (var i = 0; i < Math.abs(dx / cellWidth) + 1; i++) {
+                            var fitposition = GetFitCoordinate([val_x / cellWidth, val_y / cellWidth]);
+                            fitposition[0] = fitposition[0] * cellWidth;
+                            fitposition[1] = fitposition[1] * cellWidth;
+                            points.push(fitposition);
+                            val_x += cellDx;
+                            val_y += Math.abs(k) * cellDy;
+                        }
+                    } else {
+                        for (var i = 0; i < Math.abs(dy / cellWidth) + 1; i++) {
+                            var fitposition = GetFitCoordinate([val_x / cellWidth, val_y / cellWidth]);
+                            fitposition[0] = fitposition[0] * cellWidth;
+                            fitposition[1] = fitposition[1] * cellWidth;
+                            points.push(fitposition);
+                            val_x += Math.abs((1 / k)) * cellDx;
+                            val_y += cellDy;
+                        }
+                    }
+                } else {
+                    for (var i = 0; i < Math.abs(dy / cellWidth) + 1; i++) {
+                        points.push([val_x, val_y]);
+                        val_y += cellDy;
+
+                    }
+                }
+                return points;
+
+            }
+            //清除body方法
+            function RemoveDivBody(object) {
+                for (var i = 0; i < object.body.length; i++) {
+                    object.body[i].parentNode.removeChild(object.body[i]);
+                }
+                object.body.length -= 0;
+            }
+            //生成Div块方法
+            function CreateDivBody(object, width, height, positionX, positionY, className, Target) {
+                var div = document.createElement("div");
+                div.style.width = width + "px";
+                div.style.height = height + "px";
+                div.style.left = positionX + "px";
+                div.style.top = positionY + "px";
+                div.style.position = "absolute";
+                div.className += " " + className;
+                Target.appendChild(div);
+                object.body[object.body.length] = div;
+            }
+
+            //分数类
+            function Scores() {
+                this.scores = 0;
+                this.addScores = function () {
+                    var scoreLabel = document.getElementById("scoreLabel");
+                    scoreLabel.innerHTML = ++this.scores;
+                }
+            }
+
+            //关卡类,邻接表存储障碍物位置
+            function Level() {
+
+                this.body = [];
+                this.level = 0;
+                this.className = "wallColor";
+                this.Map = [
+                    //关卡1
+                    [],
+                    //关卡2
+                    [
+                        [[0, 0], [0, 27], [43, 27], [43, 0], [0, 0]],
+                    ],
+                    //关卡3
+                    [
+                        [[6, 0], [0, 0], [0, 6]],
+                        [[6, 27], [0, 27], [0, 21]],
+                        [[37, 0], [43, 0], [43, 6]],
+                        [[37, 27], [43, 27], [43, 21]],
+                        [[17, 7], [26, 7]],
+                        [[17, 10], [26, 10]],
+                        [[17, 16], [26, 16]],
+                        [[17, 19], [26, 19]],
+                        [[9, 7], [9, 19]],
+                        [[34, 7], [34, 19]],
+                        [[18, 0], [25, 0]],
+                        [[18, 27], [25, 27]],
+                    ],
+                    //关卡4
+                    [
+                        [[18, 0], [18, 10]],
+                        [[0, 14], [14, 14]],
+                        [[22, 27], [22, 17]],
+                        [[43, 10], [25, 10]]
+                    ],
+                    //关卡5
+                    [
+                        [[0, 0], [20, 10]],
+                        [[43, 0], [24, 10]],
+                        [[0, 27], [20, 15]],
+                        [[43, 27], [24, 15]],
+                        [[0, 14], [11, 12]],
+                        [[43, 14], [32, 12]],
+                        [[21, 0], [22, 7]],
+                        [[21, 27], [22, 19]],
+
+                    ],
+                ];
+                this.CreateMap = function () {
+                    //显示关卡
+                    var levelLabel = document.getElementById("levelLabel");
+                    levelLabel.innerHTML = this.level + 1;
+                    //遍历当前关卡的所有地形
+                    for (var i = 0; i < this.Map[this.level].length; i++) {
+                        //获取关卡地形
+                        var terrain = this.Map[this.level][i];
+                        //遍历地形所有坐标
+                        for (var j = 0; j < terrain.length - 1; j++) {
+                            var position_1 = terrain[j];
+                            var position_2 = terrain[j + 1];
+                            var LinePosition = GetLinePosition(position_1, position_2);
+                            //画出其中一条线的坐标
+                            for (var k = 0; k < LinePosition.length; k++) {
+                                CreateDivBody(this, cellWidth, cellWidth, LinePosition[k][0],
+                                    LinePosition[k][1], this.className, Grid);
+                            }
+                        }
+
+                    }
+                }
+            }
+            /*
+             *  食物的构造函数
+             *  参数：1.构成食物的div对象
+             *  方法:1.打印食物的方法
+             *      2.添加新食物的方法
+             */
+            function Food() {
+                this.body = [];
+                this.createFood = function () {
+                    CreateDivBody(
+                        this,
+                        cellWidth,
+                        cellWidth,
+                        Math.floor(Math.random() * GridWidth) * cellWidth,
+                        Math.floor(Math.random() * GridHeight) * cellWidth,
+                        "foodColor",
+                        Grid);
+                }
+                this.createNewFood = function (snake, level) {
+                    //生成新坐标
+                    var rx = Math.floor(Math.random() * GridWidth) * cellWidth;
+                    var ry = Math.floor(Math.random() * GridHeight) * cellWidth;
+                    //获取已被占用的div块
+                    var bodys=snake.body.concat(level.body);
+                    console.log(bodys.length);
+                    for(var i=0;i<bodys.length;i++){
+                        if(rx===bodys[i].offsetLeft&&ry===bodys[i].offsetTop){
+                            rx=(rx+cellWidth)%Grid.offsetWidth;
+                            ry=(ry+cellWidth)%Grid.offsetHeight;
+                            i=0;
+                        }
+                    }
+                    this.body[0].style.left=rx + "px";
+                    this.body[0].style.top=ry + "px";
+ 
+                }
+            }
+            /*
+             *   蛇构造函数
+             *   参数：1.移动方向（用keycode表示）
+             *        2.速度
+             */
+            function Snake(orientation, speed) {
+                this.orientation = orientation;
+                this.speed = speed;
+                this.className = "snakeBodyColor";
+                this.body = [];
+                this.moveTimer = undefined;
+                this.CreateBody = function (initBodyX, initBodyY) {
+                    //打印蛇
+                    for (var i = 0; i < initBodyX.length; i++) {
+                        this.addBody(initBodyX[i] * cellWidth, initBodyY[i] * cellWidth, this.className);
+                    }
+                }
+                this.addBody = function (positionX, positionY, className) {
+                    CreateDivBody(
+                        this,
+                        cellWidth,
+                        cellWidth,
+                        positionX,
+                        positionY,
+                        className,
+                        Grid);
+                }
+                this.hasCollision = function (item) {
+                    for (var i = 0; i < item.body.length; i++) {
+                        if (this.body[0] === item.body[i]) {
+                            continue;
+                        } else {
+                            if (this.body[0].offsetLeft === item.body[i].offsetLeft && this.body[0].offsetTop === item.body[i].offsetTop) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+
+                }
+            }
+            function GameOver(gameTimer) {
+                clearInterval(gameTimer);
+                var Grid = document.getElementById("Grid");
+                var left = document.getElementById("left");
+                Grid.className += " GameOver";
+                var GameOverLabel = document.createElement("Label");
+                GameOverLabel.innerHTML = "GameOver!!!";
+                GameOverLabel.className = " GameOverLabel";
+                left.insertBefore(GameOverLabel, left.firstElementChild);
+                //设置重新开始
+                var reloadBtn = document.getElementById("reloadBtn");
+                reloadBtn.disabled = false;
+            }
+            function GameWin(gameTimer) {
+                clearInterval(gameTimer);
+                var left = document.getElementById("left");
+                var GameOverLabel = document.createElement("Label");
+                GameOverLabel.innerHTML = "You Win!";
+                GameOverLabel.className = " GameWinLabel";
+                left.insertBefore(GameOverLabel, left.firstElementChild);
+                //设置重新开始
+                var reloadBtn = document.getElementById("reloadBtn");
+                reloadBtn.disabled = false;
+            }
+            /*
+             *  游戏逻辑函数
+             *  参数：1.蛇对象实例
+             *       2.食物对象实例
+             * 
+             */
+            function StartGameLogic(level, snake, food, scores) {
+                document.onkeydown = null;
+                //清除上一个定时器
+                clearInterval(snake.moveTimer);
+                //初始化游戏界面
+                var Grid = document.getElementById("Grid");
+                Grid.innerHTML = "";
+                //重置食物对象
+                food.body = [];
+                //重置蛇对象
+                snake.body = [];
+                snake.orientation = 68;
+                snake.speed = 200;
+                //Game值设置(true:正在进行，false：游戏结束)
+                var Game = true;
+                //生成地形
+                level.CreateMap();
+                //生成蛇和食物
+                snake.CreateBody([20, 19], [11, 11]);
+                food.createFood();
+                //下一个body块要移动的位置s
+                var nextLeft;
+                var nextTop;
+                //坐标存储器
+                var var_l;
+                var var_2;
+                snake.moveTimer = setInterval(function () {
+                    //移动函数s
+                    for (var i = 0; i < snake.body.length; i++) {
+                        //头部控制身体移动
+                        if (i === 0) {
+                            //存储头部坐标
+                            nextLeft = snake.body[i].offsetLeft;
+                            nextTop = snake.body[i].offsetTop;
+                            //移动方向逻辑w
+                            switch (snake.orientation) {
+                                case 65:
+                                    snake.body[i].style.left =
+                                        (Grid.offsetWidth + snake.body[i].offsetLeft - cellWidth) % Grid.offsetWidth + "px";
+                                    break;
+                                case 87:
+                                    snake.body[i].style.top =
+                                        (Grid.offsetHeight + snake.body[i].offsetTop - cellWidth) % Grid.offsetHeight + "px";
+                                    break;
+                                case 68:
+                                    snake.body[i].style.left =
+                                        (snake.body[i].offsetLeft + cellWidth) % Grid.offsetWidth + "px";
+                                    break;
+                                case 83:
+                                    snake.body[i].style.top =
+                                        (snake.body[i].offsetTop + cellWidth) % Grid.offsetHeight + "px";
+                                default:
+                                    break;
+                            }
+                            //判断碰撞发生
+                            if (snake.hasCollision(snake) || snake.hasCollision(level)) {
+                                snake.body[i].style.left = nextLeft + "px";
+                                snake.body[i].style.top = nextTop + "px";
+                                GameOver(snake.moveTimer);
+                                Game = false;
+                            }
+                            //剩余身体迭代移动    
+                        } else {
+                            //存储当前的坐标
+                            var_l = snake.body[i].offsetLeft;
+                            var_2 = snake.body[i].offsetTop;
+                            if (Game) {
+                                snake.body[i].style.left = nextLeft + "px";
+                                snake.body[i].style.top = nextTop + "px";
+                            }
+                            nextLeft = var_l;
+                            nextTop = var_2;
+                        }
+                    }
+                    //设置键盘事件只能触发一次
+                    Control(snake, snake.orientation);
+                    if (snake.hasCollision(food)) {
+                        snake.speed -= 10;
+                        food.createNewFood(snake,level);
+                        scores.addScores();
+                        snake.addBody(nextLeft, nextTop, snake.className);
+                        if (scores.scores % 12 == 0) {
+                            if (scores.scores<60) {
+                                level.level += 1;
+                                StartGameLogic(level, snake, food, scores);
+                            }else{
+                                GameWin(snake.moveTimer);
+                            }
+
+                        }
+                    }
+                }, snake.speed);
+            }
+            //控制函数
+            function Control(snake, currentOrientation) {
+                //定义WASD移动
+                document.onkeydown = function (event) {
+                    //移动方向逻辑
+                    switch (event.keyCode) {
+                        case 65:
+                            if (currentOrientation != 68) {
+                                snake.orientation = event.keyCode;
+                            }
+                            break;
+                        case 87:
+                            if (currentOrientation != 83) {
+                                snake.orientation = event.keyCode;
+                            }
+                            break;
+                        case 68:
+                            if (currentOrientation != 65) {
+                                snake.orientation = event.keyCode;
+                            }
+                            break;
+                        case 83:
+                            if (currentOrientation != 87) {
+                                snake.orientation = event.keyCode;
+                            }
+                        default:
+                            break;
+                    }
+                }
+
+            }
+            //游戏基础设置函数
+            function BasicSetting(snake) {
+                //停止游戏
+                var stopBtn = document.getElementById("stopBtn");
+                stopBtn.onclick = function () {
+                    clearInterval(snake.moveTimer);
+                }
+                //停止游戏
+                var reloadBtn = document.getElementById("reloadBtn");
+                reloadBtn.onclick = function () {
+                    location.reload(true);
+                }
+                reloadBtn.disabled = true;
+                //控制蛇移动函数
+                Control(snake);
+
+            }
+            //初始化游戏函数
+            function InitGame() {
+                //定义地图关卡对象
+                var level = new Level();
+                //定义蛇对象
+                var snake = new Snake(68, 200);
+                //定义食物对象
+                var food = new Food();
+                //定义分数
+                var scores = new Scores();
+                //基础设置
+                BasicSetting(snake);
+                //开启游戏逻辑
+                StartGameLogic(level, snake, food, scores);
+            }
+
+
+            //开始游戏
+            InitGame();
+
+        }
+    </script>
+</head>
+
+<body>
+    <div id="left">
+        <div id="Grid">
+        </div>
+    </div>
+    <div id="right">
+        <div id="score">
+            <label>分数:</label><label id="scoreLabel">0</label>
+        </div>
+        <div id="level">
+            <label>关卡:</label><label id="levelLabel">1</label>
+        </div>
+        <div id="orientation">
+            <button>A</button>
+            <button>W</button>
+            <button>S</button>
+            <button>D</button>
+        </div>
+        <div id="control">
+            <button id="stopBtn">Debug暂停</button>
+            <button id="reloadBtn">重新开始</button>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<template>
+	<h1>{{getNumber}}</h1>
+</template>
+
+<script setup>
+	import {
+		reactive,
+		ref,
+		watch,
+		computed
+	} from 'vue'
+	const count = ref(0)
+	// const data =reactive({age:18})
+	//计算属性 computed
+	const getNumber = computed(() => {
+		console.log('计算属性执行')
+		return count.value;
+	})
+	//监听属性 watch
+	watch(count, (newValue, oldValue) => {
+		console.log(newValue, oldValue);
+	})
+	// watch(()=>data.age, (newValue, oldValue) => {
+	// 	console.log(newValue, oldValue);
+	// })
+
+	//watchEffect 所有内部值监听
+</script>
+
+<style>
+</style>

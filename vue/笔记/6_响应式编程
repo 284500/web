@@ -1,0 +1,93 @@
+手动追踪变量的变化
+Proxy对象在初始化时需要传入一个要包装的对
+象和对应的处理器，处理器中可以定义get和set方法
+
+//为对象创建一个代理,handleA 用来指定代理的行为
+handleA = {
+            get(target,prop){
+                return target[prop]
+            },
+            set(target, prop, value) {
+                target[prop] = value
+                if (trigger) {
+                    trigger()
+                }
+            }
+        }
+
+//trigger()触发所以使用改值的位置进行更新
+// 进行对象的代理包装
+        let pa = new Proxy(a, handleA)
+
+为了解决上面的问题，Vue 3.0中提供了reactive方法，使用这个方
+法对自定义的JavaScript对象进行包装，即可以方便地为其添加响应式。
+修改上面代码中的setup方法如下
+
+setup() {
+                let myData=Vue.reactive({
+                    value:0
+                })
+                function click() {
+                    myData.value+=1
+                    console.log(myData.value)
+                }
+                return {myData,
+                click}
+            }
+
+ref包装单个值  let myObject=Vue.ref(1)
+使用
+ref方法创建了响应式对象后，在setup方法内要修改数据，就需要对
+myObject中的value属性值进行修改
+
+Vue中还提供了一个名为toRefs的方法来支持响应式对象的解构赋
+值
+let myObject = Vue.reactive({
+                    value:0
+                })
+                let { value } = Vue.toRefs(myObject)
+
+
+ 当然，在组件中
+可以使用computed选项来定义计算属性。
+let a=Vue.ref(1);
+let b=Vue.ref(2);
+let sum=Vue.computed(()=>{return a.value+b.value});
+
+watchEffect方法可以自动
+对其内部用到的响应式变量进行变化监听
+let stop = Vue.watchEffect(()=>{
+                    // 当变量a变化时，即会执行当前函数
+                    console.log("变量a变化了")
+                    console.log(a.value)
+                })
+                 a.value = 2;
+                stop();
+watch是一个与watchEffect类似的方法，与watchEffect方法相比，
+watch方法能够更加精准地监听指定的响应式数据的变化
+Vue.watch([()=>{
+                    // 监听a对象的data属性变化
+                    return a.data
+                },b], ([valueA, valueB], [oldA, oldB])=>{
+                    // 新值和旧值都可以获取到
+                    console.log(valueA, oldA)
+                    console.log(valueB, oldB)
+                })
+
+setup方法是组合式API功能的入口方法，如果使用组合式API模式
+进行组件开发，则逻辑代码都要编写在setup方法中
+
+如果不在组件中定义template模板，也可以直接使用setup方法来返
+回一个渲染函数，当组件将要被展示时，会使用此渲染函数进行渲染。
+
+
+setup (props, context) {
+                let data = "setup的数据";
+                Vue.onMounted(()=>{
+                    console.log("setup定义的mounted")
+                })
+                return () => Vue.h('div', [data])
+            },
+            props: {
+                name: String,
+            }

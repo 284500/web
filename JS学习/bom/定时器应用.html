@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box1{
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				position: absolute;
+			}
+		</style>
+		<script>
+			window.onload=function(){
+				var box1=document.getElementById("box1");
+				var btn1=document.getElementById("btn1");
+				var btn2=document.getElementById("btn2");
+				var timer;
+				function getstyle(obj,name)
+				{
+					//obj 要获取样式的元素,name 要获取的样式名
+					return getComputedStyle(obj,null)[name];
+				}
+				btn1.onclick=function(){
+					clearInterval(timer);
+					//开启定时
+					timer=setInterval(function(){
+						//box1.style.left=box1.offsetLeft+10+"px";
+						box1.style.left=parseInt(getstyle(box1,"left"))+19+"px";
+					if(parseInt(box1.style.left)>800){box1.style.left="800px";}
+					if(parseInt(box1.style.left)==800){
+						clearInterval(timer);
+					      }
+					},30);
+				};
+				btn2.onclick=function(){
+					clearInterval(timer);
+					//开启定时
+					timer=setInterval(function(){
+					box1.style.left=parseInt(getstyle(box1,"left"))-19+"px";
+					if(parseInt(box1.style.left)<0){box1.style.left="0px";}
+					if(parseInt(box1.style.left)==0){
+						clearInterval(timer);
+					      }
+					},30);
+				};
+			}
+		</script>
+	</head>
+	<body>
+		<button id="btn1">点击向右</button>
+		<button id="btn2">点击向左</button>
+		<div id="box1"></div>
+		<div style="width: 0; height: 1000px; border-left: 1px black solid; position: absolute; left: 800px; top: 0;"></div>
+	</body>
+</html>

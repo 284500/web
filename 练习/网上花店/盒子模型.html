@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>认识盒子模型</title>
+		<style type="text/css">
+		.box{
+			width: 500px;
+			height: 200px;
+			border: 15px solid red;
+			border-top-width: 30px;
+			background: green;
+			padding: 30px;
+			margin: 20px;
+		}
+		.frist{
+			width: 200px;
+			height: 100px;
+			margin-top: 30px;
+			background: pink;
+		}
+		.second
+		{
+			width: 200px;
+			height: 200px;
+			margin-top: 30px;
+			border-top: 3px solid red;
+			background: red;
+		}
+		body{
+			background-image: url(img/1.jpg);
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+		<p align="center">这是一个盒子模型</p>
+		<p>第二行</p>
+		</div>
+		<p class="frist">第一</p>
+		<p class="second">第二</p> 
+		<div class="second">
+			<div class="frist"></div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,107 @@
+<template>
+  <div class="content">
+    <div class="form">
+      <el-form ref="form" :model="Form" label-width="80px">
+        <el-form-item label="商品名称">
+          <el-input v-model="Form.name"></el-input>
+        </el-form-item>
+        <el-form-item label="商品价格">
+          <el-input v-model="Form.price"></el-input>
+        </el-form-item>
+        <el-form-item label="商品描述">
+          <el-input v-model="Form.description"></el-input>
+        </el-form-item>
+        <el-upload action="/api/portrait" list-type="picture-card" :on-preview="handlePictureCardPreview"
+          :on-remove="handleRemove" :before-upload="beforeProductUpload">
+          <el-icon>
+            <Plus />
+          </el-icon>
+        </el-upload>
+        <el-form-item>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt="">
+          </el-dialog>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submit">立即创建</el-button>
+          <el-button>取消</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+
+  </div>
+</template>
+<script setup>
+import { ref, reactive } from 'vue'
+import { Plus } from '@element-plus/icons-vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { postAxios } from '../utils/Request';
+
+let Form = reactive({
+  name: '',
+  imageurl: [],
+  price: '',
+  description: '',
+  imagename: []
+});
+let dialogImageUrl = ref();
+let dialogVisible = ref(false)
+
+function handlePictureCardPreview(file) {
+  dialogImageUrl.value = file.url;
+  dialogVisible.value = true;
+  Form.imagename.push(file.name)
+  console.log(file.name)
+}
+function beforeProductUpload(file) {
+  Form.imagename.push(file.name)
+  return new Promise(function (resolve, reject) {
+    var reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = function (e) {
+      Form.imageurl.push(e.target.result)
+    }
+  })
+}
+function submit() {
+  ElMessageBox.confirm(
+    '确定提交?',
+    'Warning',
+    {
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Cancel',
+      type: 'warning',
+    }
+  )
+    .then(() => {
+      ElMessage({
+        type: 'success',
+        message: '上传成功',
+      })
+      let form = {
+        name: Form.name,
+        imgdata: Form.imageurl,
+        price: Form.price,
+        description: Form.description,
+        imgname: Form.imagename
+      }
+      postAxios('/api/form',form)
+      
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: '上传取消',
+      })
+    })
+
+
+}
+</script>
+<style scoped>
+.form {
+  background-color: aqua;
+  padding: 20px;
+}
+
+</style>

@@ -1,0 +1,44 @@
+组件在vue3里就是一个普通的js对象
+
+一，组件基础
+应用实例可以使用component方法来定义组件
+<script>
+        const app = Vue.createApp({})
+        app.component('runoob', {
+            data() {
+                return {
+                    count:0
+                }
+            },
+            template: '<button @click="count++">点了 {{ count }} 次！</button>'
+        })
+    app.mount('#app')
+    </script>
+
+在父元素中创建局部组件
+// const app = Vue.createApp({
+        //     components: {
+        //         'runoob-a': runoobA
+        //     }
+        // }
+
+template 决定了组件的样子
+
+props 是properties的缩写，意思为属性，props定义的属性是提供给
+外部进行设置使用的，也可以将其称为外部属性
+
+对组件进行改造，我们可以尝试将其中按钮单击的时间传递给父组件处理，即传递给使用此组件的业务方处理。
+在Vue中，可以使用内建的$emit方法来传递事件,同时也可以传递一些参数
+在子组件中需要向父组件传值处使用this.$emit("function",param);
+   //其中function为父组件定义函数，param为需要传递参数
+
+   所有支持v-model指令的组件中默认都会提供一个名为modelValue
+的属性，而组件内部的内容变化后向外传递的事件为
+update:modelValue，并且在事件传递时会将组件内容作为参数进行传
+递。
+
+
+组件中不能直接插入子元素，必须使用插槽来实现
+
+component是一个特殊的标签，其通过is属性来指定要渲染的组件名称
+<component :is=""></component>

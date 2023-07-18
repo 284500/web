@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script>
+			window.onload=function(){
+			function myclick(myid,fun){
+				var btn=document.getElementById(myid);
+				btn.onclick=fun;
+				}	
+			myclick("box",function(){
+				//创建标签节点
+				var li=document.createElement("li");
+				//创建文本节点
+				 var gztext=document.createTextNode("广州");
+				 li.appendChild(gztext);
+				 alert(li.innerHTML);
+				 var city=document.getElementById("city");
+				 city.appendChild(li);
+			});
+			myclick("box1",function(){
+				var li=document.createElement("li");
+				 var gztext=document.createTextNode("广州");
+				 li.appendChild(gztext);
+				 var frist=document.getElementById("frist");
+				 var city=document.getElementById("city");
+				//在子节点插入
+				city.insertBefore(li,frist);
+				 //使用innerhtml插入
+				 //city.innerHTML+="<li>广州</li>";
+			});
+			myclick("box2",function(){
+				var li=document.createElement("li");
+				 var gztext=document.createTextNode("广州");
+				 li.appendChild(gztext);
+				 var frist=document.getElementById("frist");
+				 var city=document.getElementById("city");
+				//在子节点替换
+				 city.replaceChild(li,frist);
+			});
+			myclick("box3",function(){
+				 var frist=document.getElementById("frist");
+				 var city=document.getElementById("city");
+				//在子节点替换
+				// city.removeChild(frist);
+				//首位子节点移除
+				 frist.parentNode.removeChild(frist);
+			});
+		}
+		</script>
+	</head>
+	<body>
+		<div class="boxs">
+			<ul id="city">
+				<li id="frist">1号</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+			</ul>
+			<button id="box">插入</button>
+			<button id="box1">前插入</button>
+			<button id="box2">替换</button>
+			<button id="box3">移除</button>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,96 @@
+   组件在被创建出来到渲染完成会经历一系列过程，同样组件的销毁
+也会经历一系列过程，组件从创建到销毁的这一系列过程被称为组件的
+生命周期
+
+全局组件,直接挂载在Vue应用里
+const app = Vue.createApp({...})
+app.component('my-component-name', {
+  /* ... */
+})
+局部组件
+const app = Vue.createApp({...})
+const comp2={template:``}
+const comp1={components:{},template:``}
+app.component('comp1', comp1)
+
+prop传递
+
+在外部传递数值
+类型的数据到组件内部时，必须使用v-bind指令的方式进行传递，直接
+使用HTML属性设置的方式会将传递的数据作为字符串传递
+props:{count:{
+            //设置数据类型
+            type:Number,
+            //设置是否必传
+            rquired:false,
+            //设置默认值
+            default:0
+        },
+    }
+
+prop验证
+  props: {
+    // 基础的类型检查 (`null` 和 `undefined` 会通过任何类型验证)
+    propA: Number,
+    // 多个可能的类型
+    propB: [String, Number],
+    // 必填的字符串
+    propC: {
+      type: String,
+      required: true
+    },
+    // 带有默认值的数字
+    propD: {
+      type: Number,
+      default: 100
+    },
+    // 带有默认值的对象
+    propE: {
+      type: Object,
+      // 对象或数组默认值必须从一个工厂函数获取
+      default: function () {
+        return { message: 'hello' }
+      }
+    },
+    // 自定义验证函数
+    propF: {
+      validator: function (value) {
+        // 这个值必须匹配下列字符串中的一个
+        return ['success', 'warning', 'danger'].indexOf(value) !== -1
+      }
+    }
+  }
+
+  你可能已经发现，对组件内部来说，Props是只读的。也就是说，
+我们不能在组件内部修改Props属性的值，所有的外
+部属性Props都只允许父组件的数据流动到子组件中，子组件的数据则
+不允许流向父组件
+
+  实现数据注入需要使用组件的provide与inject两个配置项，提供数
+据的父组件需要设置provide配置项来提供数据，子组件需要设置inject
+配置项来获取数据
+
+mixins 混入 (mixins)定义了一部分可复用的方法或者计算属性。混入对象可以包含任意组件选项。
+当组件使用混入对象时，所有混入对象的选项将被混入该组件本身的选项
+
+同名钩子函数将合并为一个数组，因此都将被调用。另外，mixin 对象的钩子将在组件自身钩子之前调用。
+值为对象的选项，例如 methods、components 和 directives，
+将被合并为同一个对象。两个对象键名冲突时，取组件对象的键值对。
+
+自定义组件
+const app = Vue.createApp({})
+        app.directive('getfocus',{
+            mounted (element){
+                console.log("获得焦点")
+                element.focus()
+            }
+        })
+
+自定义指令也可以设置值和参数，这些设置数据会通过一个param
+对象传递到指令中实现的生命周期方法中 
+指令设置的值被绑定到param对象的value属
+性上，指令设置的custom参数被绑定到param对象的arg属性上       
+
+如果组件模板中的某些元素只能挂载在指定的标签
+下，可以使用Teleport来指定，可以形象地理解Teleport的功能是将此部
+分元素“传送”到指令的标签下

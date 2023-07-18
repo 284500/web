@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        //promise需要一个回调函数作为参数
+        //promise的回调函数可以指定两个参数resolve,reject
+        //resolve,在代码正常时，来设置返回值 reject在执行出错时，用来设置错误信息
+        // const myPromise= new Promise((resolve,reject)=>{
+        //     throw new Error('报错了')
+        //     setTimeout(()=>{
+        //         //console.log("dada")
+        //         //设置返回值
+        //         resolve(666)
+        //     },1000)
+        // })
+        //获取返回值
+    //    myPromise
+    //    .then(result=>console.log(result))
+    //    .catch((e)=>console.log(e))
+    function fn1(n){
+        return new Promise((resolve)=>{
+            setTimeout(function(){
+                resolve(n+1)
+            },1000)
+        })
+    }
+    function fn2(n){
+        return new Promise((resolve)=>{
+            setTimeout(function(){
+                resolve(n+2)
+            },1000)
+        })
+    }
+    function fn3(n){
+        return new Promise((resolve)=>{
+            setTimeout(function(){
+                resolve(n+3)
+            },1000)
+        })
+    }
+    function fn4(n){
+        return new Promise((resolve)=>{
+            setTimeout(function(){
+                resolve(n+4)
+            },1000)
+        })
+    }
+fn1(10)
+    .then(n=>fn2(n))
+    .then(n=>fn3(n))
+    .then(n=>console.log(n))
+
+    // fetch也是异步请求工具，基于promise
+    // fetch("api")
+    // .then(resp=>resp.json())
+    // .then(data=>console.log(data))
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

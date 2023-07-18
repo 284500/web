@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>表格样式</title>
+	<style type="text/css">
+	thead {
+		color: #DDDDDD;
+		background-color: #008000;
+	}
+	table,td,th{ 
+		border: 1px solid #008000;
+	}
+	table{
+		width: 100%;
+		border-collapse: collapse;
+	}
+    th,td{
+		text-align: left;
+		padding: 8px;
+	}
+	
+	.even{
+		background-color: #FFA500;
+	}
+	</style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Contact</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Apple</td>
+                <td>Steven Jobs</td>
+                <td>USA</td>
+            </tr>
+            <tr class="even">
+                <td>Baidu</td>
+                <td>Li YanHong</td>
+                <td>China</td>
+            </tr>
+            <tr>
+                <td>Google</td>
+                <td>Larry Page</td>
+                <td>USA</td>
+            </tr>
+            <tr class="even">
+                <td>Lenovo</td>
+                <td>Liu Chuanzhi</td>
+                <td>China</td>
+            </tr>
+            <tr>
+                <td>Microsoft</td>
+                <td>Bill Gates</td>
+                <td>USA</td>
+            </tr>
+            <tr class="even">
+                <td>Nokia</td>
+                <td>Stephen Elop</td>
+                <td>Finland</td>
+            </tr>
+        </tbody>           
+    </table>
+</body>
+</html>

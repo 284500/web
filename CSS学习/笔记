@@ -1,0 +1,139 @@
+                                   链接 link
+a:link - 正常，未访问过的链接
+
+a:visited - 用户已访问过的链接
+
+a:hover - 当用户鼠标放在链接上时
+
+a:active - 链接被点击的那一刻  
+
+                                 列表
+
+无序列表ul
+
+有序列表ol
+
+列表项标记list-style-type
+用图片做标记list-style-image:url
+
+
+                                   伪类和伪元素(:)
+伪类 特殊状态
+伪元素 特殊位置
+:link	a:link	选择所有未访问链接
+:visited	a:visited	选择所有访问过的链接
+:active	a:active	选择正在活动链接
+:hover	a:hover	把鼠标放在链接上的状态
+:focus	input:focus	选择元素输入后具有焦点
+:first-letter	p:first-letter	选择每个<p> 元素的第一个字母
+:first-line	p:first-line	选择每个<p> 元素的第一行
+:first-child	p:first-child	选择器匹配属于任意元素的第一个子元素的 <p> 元素
+:before	p:before	在每个<p>元素之前插入内容
+:after	p:after	在每个<p>元素之后插入内容
+:lang(language)	p:lang(it)	为<p>元素的lang属性选择一个开始值
+
+
+ inline block 行，块元素切换
+
+                                     定位 position
+设置定位后,可以设置left,top等来设置位置
+
+fixed 定位
+position:fixed;
+元素的位置相对于浏览器窗口是固定位置。
+即使窗口是滚动的它也不会移动
+
+relative 定位
+position:relative;
+相对定位元素的定位是相对其正常位置。
+
+absolute 定位
+position:absolute;
+绝对定位的元素的位置相对于最近的已定位父元素，如果元素没有已定位的父元素，那么它的位置相对于<html>:
+
+sticky 定位
+position: -webkit-sticky;
+position: sticky; 基于用户的滚动位置来定位。
+粘性定位的元素是依赖于用户的滚动，在 position:relative 与 position:fixed 定位之间切换
+
+z-index 覆盖
+position:absolute;
+z-index:-1;
+指定了一个元素的堆叠顺序（哪个元素应该放在前面，或后面）
+一个元素可以有正数或负数的堆叠顺序：
+                        
+                             overflow 布局
+
+visible	默认值。内容不会被修剪，会呈现在元素框之外
+
+hidden	内容会被修剪，并且其余内容是不可见的。
+
+scroll	内容会被修剪，但是浏览器会显示滚动条以便查看其余的内容。
+
+auto	如果内容被修剪，则浏览器会显示滚动条以便查看其余的内容。
+
+inherit	规定应该从父元素继承 overflow 属性的值
+
+                            float 浮动
+
+CSS 的 Float会使元素向左或向右移动,其周围的元素也会重新排列
+
+清除浮动 - 使用 clear
+元素浮动之后，周围的元素会重新排列，为了避免这种情况，使用 clear 属性。
+clear 属性指定元素两侧不能出现浮动元素
+
+                              对齐
+文本居中
+ text-align: center;
+
+ 元素居中
+margin: auto;
+如果没有设置 width 属性(或者设置 100%)，居中对齐将不起作用
+
+图片居中
+display: block;
+margin: auto;
+
+水平对齐
+position: absolute; 属性来对齐元素:
+使用 float 属性来对齐元素、
+float:left; 在父元素上添加 overflow: auto; 来解决子元素溢出的问题
+
+垂直居中
+使用 position 和 transform
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+    
+                             display 显示
+
+隐藏元素 
+display:none或 visibility:hidden
+visibility:hidden可以隐藏某个元素，但隐藏的元素仍需占用与未隐藏之前一样的空间。
+也就是说，该元素虽然被隐藏了，但仍然会影响布局
+
+Display  
+设置块和内联元素
+display:inline 行内元素 内联元素只需要必要的宽度，不强制换行。
+display:block  块元素  块元素是一个元素，占用了全部宽度，在前后都是换行符
+display:inline-block 行内块元素 不独占一行，又可以设置宽高
+                       
+					           弹性盒子 flex
+
+flex-direction 子元素在父元素里的位置
+flex-direction: row | row-reverse | column | column-reverse
+row：横向从左到右排列（左对齐），默认的排列方式。
+row-reverse：反转横向排列（右对齐，从后往前排，最后一项排在最前面。
+column：纵向排列。
+column-reverse：反转纵向排列，从后往前排，最后一项排在最上面
+
+justify-content 属性 设置水平位置
+justify-content: flex-start | flex-end | center | space-between | space-around
+
+align-items 属性 设置垂直位置
+align-items: flex-start | flex-end | center | baseline | stretch
+
+flex-wrap 属性 设置是否同行
+flex-wrap: nowrap|wrap|wrap-reverse|initial|inherit;
+nowrap会让元素在同一行

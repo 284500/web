@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 150px;
+            height: 150px;
+            background: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="ad"></div>
+    <script>
+        let ad = document.getElementById('ad');
+        ad.addEventListener("click", function () {
+            let _this = this;
+            // setTimeout(function(){
+            //     _this.style.background='pink';
+            // },2000);
+            setTimeout(() => {
+                this.style.background = 'pink';
+            }, 2000);
+        });
+        const arr=[1,3,4,7,10,11,20];
+        // const result=arr.filter(function(item){
+        //     if(item%2===0){
+        //         return true;
+        //     }else
+        //     {
+        //         return false;
+        //     }
+        // });
+        // console.log(result);
+
+        const result=arr.filter(item => item%2===0);
+        console.log(result);
+        //箭头函数不适合与this有关的回调，事件回调，对象的方法
+        //箭头函数适合于this无关的回调，定时器，数组的方法回调
+    </script>
+</body>
+
+</html>

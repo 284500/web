@@ -1,0 +1,16 @@
+将本地库上传git
+
+git remote add origin (url)
+
+修改当前分支的名称
+git branch -M （name)
+
+上传库
+git push
+
+
+
+添：将修改的内容添加到本地暂存区 git add。
+提：将本地暂存区中的内容提交到本地代码库 git commit -m 'description'。
+拉：同步，拉取远程代码库中的内容，在多人协同开发中十分的重要，因为假如事先没有同步更新到最新版本有可能会覆盖别人修改的东西，假如拉取后有冲突直接使用VS Code解决冲突即可 git pull。
+推：将本地代码库中的内容推送到远程代码仓库 git push。

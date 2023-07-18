@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			#box1{
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				position:absolute;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload=function(){
+				var box1=document.getElementById("box1");
+				box1.onmousedown=function(event){
+					//div偏移量 client-offleft
+					var x=event.pageX-box1.offsetLeft;
+					var y=event.pageY-box1.offsetTop;
+					document.onmousemove=function(event){
+					var left=event.pageX-x;
+					var top=event.pageY-y;
+					box1.style.left=left+"px";
+					box1.style.top=top+"px";
+				};
+				document.onmouseup=function(){
+					document.onmousemove=null;
+					document.onmouseup=null;
+				};
+				//当我们拖拽内容时,浏览器会搜索
+				return false;
+				};
+				
+			};
+		</script>
+	</head>
+	<body style="height: 1000px;">
+		<p>dadada</p>
+		<div id="box1">	</div>
+	</body>
+</html>

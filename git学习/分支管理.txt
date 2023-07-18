@@ -1,0 +1,19 @@
+查看当前分支:
+ git branch
+
+创建分支命令：
+
+git branch (branchname)
+切换并创建分支命令:
+
+git switch -c update
+
+
+切换分支
+git switch master
+
+合并分支
+
+ git merge update
+git branch -d update //将update分支删除
+

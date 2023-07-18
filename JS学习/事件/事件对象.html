@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			#areadiv{
+				width: 200px;
+				height: 200px;
+				background-color: aqua;
+			}
+		</style>
+		<script>
+			window.onload=function(){
+				var areadiv=document.getElementById("areadiv");
+				var showmsg=document.getElementById("showMsg");
+				//onmousemove
+				//事件对象,当时间函数被触发时。浏览器会将一个事件对象作为函数传递
+				//封装了当前事件的一切对象
+				areadiv.onmousemove=function(e){
+					//显示坐标
+					var x=e.clientX;
+					var y=e.clientY;
+					//alert("x="+x+" ,y="+y);
+					showmsg.innerHTML="x="+x+" ,y="+y;
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="areadiv"></div>
+		<div id="showMsg"></div>
+	</body>
+</html>

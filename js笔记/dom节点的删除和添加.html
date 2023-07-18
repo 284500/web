@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+	</head>
+	<style>
+		.container {
+			width: 300px;
+			height: 600px;
+			background-color: aqua;
+			transition: 1s;
+			overflow: hidden;
+		}
+	</style>
+	<script>
+		window.onload = function() {
+			var flag = true;
+			var div = document.getElementsByClassName("container");
+			//console.log(div[0]);
+			var btn = document.getElementsByClassName("btn");
+
+			btn[0].onclick = function() {
+				if (flag) {
+					var h1 = document.createElement("h1");
+					h1.innerHTML = "dadada"
+					div[0].appendChild(h1);
+					div[0].style.width = 100 + "px";
+				} else {
+					var h1 = document.getElementsByTagName("h1");
+					console.log(h1);
+					h1[0].remove();
+					div[0].style.width = 300 + "px";
+				}
+				flag = !flag;
+			}
+		}
+	</script>
+	<body>
+		<div class="container">
+		</div>
+		<button class="btn">点击收缩</button>
+	</body>
+</html>

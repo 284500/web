@@ -1,0 +1,21 @@
+//父组件设置透传
+<ChipVue
+        class="rounded"
+        style="border: 1px solid blue;"
+        title="纸片"
+        @click="say"
+    />
+
+// 透传的属性和事件对象
+let attrs = useAttrs()
+ 
+ // 在 JS 中访问透传的属性和事件
+function showAttrs() {
+    console.log(attrs)
+    console.log(attrs.class)
+    console.log(attrs.title)
+    console.log(attrs.style)
+    attrs.onClick()
+}
+
+

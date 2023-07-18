@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>axios </title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <button>GET</button>
+    <button>POST</button>
+    <button>AJAX</button>
+    <script>
+        const btns=document.querySelectorAll('button');
+        //配置baseURL
+        axios.defaults.baseURL='http://127.0.0.1:8000';
+        
+        btns[0].onclick=function(){
+            //get请求
+            axios.get('/axios',{
+                //发送参数
+                params:{
+                    name:'mark',
+                    age:18
+                },
+                //请求头消息
+                headers:{
+                    name:'adad',
+                    age:20
+                }
+            }).then(value=>console.log(value))
+        }
+        btns[1].onclick=function(){
+            //post请求
+            axios.post('/axios',{
+                fristname:'mark',
+                lastname:'hu'
+            },//其他配置
+            {}).then(value=>console.log(value))
+        }
+        btns[2].onclick=function(){
+            //通用方法
+            axios({
+                method:'POST',
+                url: '/axios',
+                params:{
+                    name:'mark',
+                    age:18
+                },
+                //请求头消息
+                headers:{
+                    name:'adad',
+                    age:20
+                },
+                data: {
+                    id:12,
+                    name:"dada"
+                }
+            })
+        }
+    </script>
+</body>
+</html>

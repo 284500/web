@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+	<script type="text/javascript">
+		function check(){
+			var nametip=checkusername();
+			var passwordtip=checkpassword();
+			var emailtip=checkemail();
+		return nametip&&passwordtip&&emailtip;
+		}
+		function checkusername(){
+			var username=document.forms["myform"]["username"].value;
+			var reg=RegExp();
+			reg=[^,#$&]{3,12};
+			if (username==null||username="")
+			{
+				alert("用户名必须填写");
+				return false;
+			}
+			if(reg.text(username)==false)
+			{
+				alert("用户名格式不对");
+				return false;
+			}
+			return true;
+		}
+		function checkpassword(){
+			var password1=document.forms["myform"]["pwd"];
+			var password2=document.forms["myform"]["repwd"];
+			if(password1==null||password1="")
+			{
+				alert("密码必须填写");
+				return false;
+			}
+			if(password2==null||password2="")
+			{
+				alert("密码必须填写");
+				return false;
+			}
+			if(password1!=password2)
+			{
+				alert("两次密码不同");
+				return false
+			}
+			return true;
+		}
+		function checkemail(){
+			var email=document.forms["myform"]["email"]
+			var reg= new RegExp();
+			reg=/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+			if (reg.text(email)==false)
+			{
+				alert("邮箱格式不对");
+				return false;
+			}
+			retutn true;
+		}
+	</script>
+</head>
+<body>
+    <h1>用户注册</h1>
+    <form action="#" method="post" onsubmit="return check();" name="myform">
+        <p>
+            <label for="username">姓名：</label>
+            <input type="text" name="username" id="username" />
+        </p>
+        <p>
+            <label for="pwd">密码：</label>
+            <input type="password" name="pwd" id="pwd" />
+        </p>
+        <p>
+            <label for="repwd">确认密码：</label>
+            <input type="password" name="repwd" id="repwd" />
+        </p>
+        <p>
+            <label>性别：</label>
+            <label><input type="radio" name="sex" />男</label>
+            <label><input type="radio" name="sex" />女</label>
+        </p>
+        <p>
+            <label for="email">邮箱：</label>
+            <input type="email" name="email" id="email" />
+        </p>
+        <p>
+            <label for="idtype">身份：</label>
+            <select name="idtype" id="idtype">
+                <option value="student">学生</option>
+                <option value="teacher">老师</option>
+            </select>
+        </p>
+        <p>
+            <label for="intro">介绍</label>
+            <textarea name="intor" id="intro" cols="30" rows="10"></textarea>
+        </p>
+        <p>
+            <input type="submit" value="注册">
+            <input type="reset" value="重填">
+        </p>
+    </form>
+	
+</body>
+</html>

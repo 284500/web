@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //symbol的创建
+        let s = Symbol();
+        //console.log(s,typeof s);
+        let s2 = Symbol('尚硅谷');
+        let s4 = Symbol.for('尚硅谷');
+
+        //给对象添加属性和方法
+        let game = {};
+        let methods = {
+            up: Symbol('one'),
+            down: Symbol()
+        };
+        game[methods.up] = function(){
+            console.log("快速下降");
+        };
+        console.log(game);
+    </script>
+</body>
+
+</html>

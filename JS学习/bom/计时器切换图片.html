@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#demo{
+			margin: 0 auto;
+		}
+		#demo img{
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+		var timer;
+		var btn01=document.getElementById("btn01");
+		var btn02=document.getElementById("btn02");
+		var imgarr=["../img/1.jpg","../img/2.jpg","../img/3.jpg","../img/4.jpg","../img/101.jpg"];
+		var index=0;
+		var img=document.getElementsByTagName("img")[0];
+		btn01.onclick=function(){
+			clearInterval(timer);
+			 timer=setInterval(function(){
+			index++;
+			index%=imgarr.length;
+			img.src=imgarr[index];
+			// if(index==4){
+			// 	clearInterval(timer);
+			// }
+		},1000);
+		}
+		btn02.onclick=function(){
+			clearInterval(timer);
+		}
+	};
+	</script>
+</head>
+<body>
+    <div id="demo">
+        <img src="../img/1.jpg" alt="壁纸"/>
+		<button id="btn01">开始</button>
+		<button id="btn02">停止</button>
+    </div>
+</body>
+</html>

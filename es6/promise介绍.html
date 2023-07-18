@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //实例化promise对象
+        //Promise 对象只有：从 pending 变为 fulfilled 和从 pending 变为 rejected 的状态改变
+        const p = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                // let data = '数据库里的用户数据';
+                // resolve(data);
+                
+                //读取失败时
+                let err='失败';
+                reject(err);
+            }, 2000);
+        });
+
+        //调用promise的then方法
+        p.then(function (value) {
+            console.log(value);
+        },function(reason){
+            console.log(reason);
+        });
+		//catch方法报错
+		p.catch(function(reason){
+			console.warn(reason);
+		});
+    </script>
+</body>
+
+</html>

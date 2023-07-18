@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+				list-style-type: none;
+			}
+			a,img{
+				border: 0;
+				text-decoration: none;
+			}
+				
+			body{
+				font: 12px/180% arial,Helvetica,sans-serif,"新宋体";
+			}
+		</style>
+		<script src="../js/tools.js"></script>
+		<script>
+			window.onload=function(){
+			var menuSpan=document.querySelectorAll(".menuSpan");
+			var opendiv=menuSpan[0].parentNode;
+			for(var i=0;i<menuSpan.length;i++)
+			menuSpan[i].onclick=function(){
+				var parentdiv=this.parentNode;
+				// var begin=parentdiv.offsetHeight;
+				// toggleclass(parentdiv,"collapsed");
+				// var end=parentdiv.offsetHeight;
+				// //关闭div
+				// parentdiv.style.height=begin+"px";
+				// move(parentdiv,"height",10,end,function(){
+				// 	parentdiv.style.height="";
+				//  });
+				toggleMenu(parentdiv);
+				if(opendiv!=parentdiv&&!hasclass(opendiv,"collapsed"))
+				{
+					//addClass(opendiv,"collapsed");
+					//toggleclass(opendiv,"collapsed");
+					toggleMenu(parentdiv);
+					}
+				opendiv=parentdiv;
+			}
+				
+			function toggleMenu(obj){
+				var begin=obj.offsetHeight;
+				toggleclass(obj,"collapsed");
+				var end=obj.offsetHeight;
+				//关闭div
+				obj.style.height=begin+"px";
+				move(obj,"height",10,end,function(){
+					obj.style.height="";
+				});
+			}
+		}
+			
+		</script>
+	</head>
+	<body>
+		<div id="my_menu" class="sdmenu">
+			<div>
+				<span class="menuspan"></span>
+				<a href="">1</a>
+				<a href="">2</a>
+				<a href="">3</a>
+				<a href="">4</a>
+				</div>
+			<div class="collapsed">
+				<span class="menuspan"></span>
+				<a href="">1</a>
+				<a href="">2</a>
+				<a href="">3</a>
+				<a href="">4</a>
+				</div>
+		</div>
+	</body>
+</html>
